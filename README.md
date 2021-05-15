@@ -11,10 +11,10 @@
 
 ### Tables
 
-Table: products (id:integer, name:varchar, price:decimal, category:varchar)
+Table: products (id:serial, name:varchar, price:numeric, category:varchar)
 
-Table: users (id:integer, first_name:varchar, last_name:varchar, password:varchar)
+Table: users (id:serial, first_name:varchar, last_name:varchar, password:varchar)
 
-Table: orders (id:integer, user_id:integer[foreign key to users], status:integer)
+Table: orders (id:serial, user_id:integer[foreign key to users], status:smallint)
 
-Table: orders_detailed (id:integer, order_id:integer[foreign key to orders], product_id[foreign key to products], quantity:integer)
+Table: orders_detailed (id:serial, order_id:integer[foreign key to orders], product_id[foreign key to products], quantity:smallint)
