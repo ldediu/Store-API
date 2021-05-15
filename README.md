@@ -17,4 +17,4 @@ Table: users (id:integer, first_name:varchar, last_name:varchar, password:varcha
 
 Table: orders (id:integer, user_id:integer[foreign key to users], status:integer)
 
-Table: order_products (id:integer, order_id:integer[foreign key to orders], product_id[foreign key to products], quantity:integer)
+Table: orders_detailed (id:integer, order_id:integer[foreign key to orders], product_id[foreign key to products], quantity:integer)
