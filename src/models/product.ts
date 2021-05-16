@@ -28,9 +28,7 @@ export class ProductStore {
       db_conn.release();
       return result.rows[0];
     } catch (err) {
-      throw new Error(
-        `Could not find the product with id ${id}. Error: ${err}`
-      );
+      throw new Error(`Could not find product with id ${id}. Error: ${err}`);
     }
   }
 
@@ -57,9 +55,7 @@ export class ProductStore {
       db_conn.release();
       return product;
     } catch (err) {
-      throw new Error(
-        `Could not delete the product with id ${id}. Error: ${err}`
-      );
+      throw new Error(`Could not delete product with id ${id}. Error: ${err}`);
     }
   }
 }
