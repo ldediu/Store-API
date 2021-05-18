@@ -1,8 +1,8 @@
-import { ProductType, ProductStore } from '../../../src/models/product';
+import { ProductStore } from '../../../src/models/product';
 
 const store = new ProductStore()
 
-describe("Product Model", () => {
+describe("Product Model Testing", () => {
     it('should have an index method', () => {
       expect(store.index).toBeDefined();
     });
@@ -18,4 +18,42 @@ describe("Product Model", () => {
     it('should have a delete method', () => {
       expect(store.delete).toBeDefined();
     });
+
+    it('create method should add a product', async () => {
+      const result = await store.create({
+        name: 'Iphone',
+        price: 1000,
+        category: 'Phones'
+      });
+      result.price = result.price * 1;
+      expect(result).toEqual({
+        id: 1,
+        name: 'Iphone',
+        price: 1000,
+        category: 'Phones'
+      });
+    });
+
+    it('index method should return a list of products', async () => {
+      const result = await store.index();
+      result[0].price = result[0].price * 1;
+      expect(result).toEqual([{
+        id: 1,
+        name: 'Iphone',
+        price: 1000,
+        category: 'Phones'
+      }]);
+    });
+
+    it('show method should return the correct product', async () => {
+      const result = await store.show("1");
+      expect(result.id).toEqual(1);
+    });
+
+    it('delete method should remove the product', async () => {
+      store.delete("1");
+      const result = await store.index()
+      expect(result).toEqual([]);
+    });
+  
 });
