@@ -38,7 +38,12 @@ export class ProductStore {
       const sql =
         "INSERT INTO products (name, price, category) VALUES($1, $2, $3) RETURNING *";
       const result = await db_conn.query(sql, [p.name, p.price, p.category]);
-      const product = result.rows[0];
+      const product = {
+        id: result.rows[0].id,
+        name: result.rows[0].name,
+        price: Number(result.rows[0].price),
+        category: result.rows[0].category
+      }
       db_conn.release();
       return product;
     } catch (err) {
