@@ -63,4 +63,17 @@ export class ProductStore {
       throw new Error(`Could not delete product with id ${id}. Error: ${err}`);
     }
   }
+
+  async indexByCategory(category: string): Promise<ProductType[]> {
+    try {
+      const db_conn = await DB.connect();
+      const sql = "SELECT * FROM products WHERE category=($1)";
+      const result = await db_conn.query(sql, [category]);
+      const products = result.rows;
+      db_conn.release();
+      return products;
+    } catch (err) {
+      throw new Error(`Could not get products with category ${category}. Error: ${err}`);
+    }
+  }
 }
