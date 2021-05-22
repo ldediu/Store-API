@@ -35,5 +35,4 @@ describe("Users Handler Testing", () => {
         const response = await request.get('/users').send('1').set("Authorization", `Bearer ${token}1`);
         expect (response.status).toBe(401);
     });
-
 });
