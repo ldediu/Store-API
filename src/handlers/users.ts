@@ -1,7 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import {UserType, UserStore} from '../models/user';
 import verifyAuthToken from '../middleware/verifyAuthToken';
+import {UserType, UserStore} from '../models/user';
 
 const userStore = new UserStore();
 

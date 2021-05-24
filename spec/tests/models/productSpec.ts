@@ -3,6 +3,9 @@ import { ProductStore } from '../../../src/models/product';
 const store = new ProductStore()
 
 describe("Product Model Testing", () => {
+
+    let id = 1;
+
     it('should have an index method', () => {
       expect(store.index).toBeDefined();
     });
@@ -25,8 +28,9 @@ describe("Product Model Testing", () => {
         price: 1000,
         category: 'Phones'
       });
+      id = result.id as number;
       expect(result).toEqual({
-        id: 1,
+        id: id,
         name: 'Iphone',
         price: 1000,
         category: 'Phones'
@@ -39,12 +43,12 @@ describe("Product Model Testing", () => {
     });
 
     it('show method should return the correct product', async () => {
-      const result = await store.show("1");
-      expect(result.id).toEqual(1);
+      const result = await store.show(id + '');
+      expect(result.id).toEqual(id);
     });
 
     it('delete method should remove the product', async () => {
-      store.delete("1");
+      store.delete(id + '');
       const result = await store.index()
       expect(result).toEqual([]);
     });
