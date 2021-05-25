@@ -22,6 +22,7 @@ const show = async(req: express.Request, res: express.Response) => {
         res.send({
             message: 'User\'s ID must be provided'
         });
+        return;
     }
     try {
         const user = await userStore.show(req.params.id);
@@ -39,6 +40,7 @@ const create = async(req: express.Request, res: express.Response) => {
         res.send({
             message: 'First, last and password must be provided'
         });
+        return;
     }
     try {
         const new_user: UserType = {

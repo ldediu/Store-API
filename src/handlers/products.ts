@@ -21,6 +21,7 @@ const show = async(req: express.Request, res: express.Response) => {
         res.send({
             message: 'Product\'s ID must be provided'
         });
+        return;
     }
     try {
         const product = await productStore.show(req.params.id);
@@ -38,6 +39,7 @@ const create = async(req: express.Request, res: express.Response) => {
         res.send({
             message: 'Name, price and category of the product must be provided'
         });
+        return;
     }
     try {
         const new_product: ProductType = {
@@ -60,6 +62,7 @@ const destroy = async(req: express.Request, res: express.Response) => {
         res.send({
             message: 'Product\'s ID must be provided'
         });
+        return;
     }
     try {
         const product = await productStore.delete(req.params.id);
@@ -77,6 +80,7 @@ const indexByCategory = async(req: express.Request, res: express.Response) => {
         res.send({
             message: 'Product\'s category must be provided'
         });
+        return;
     }
     try {
         const products = await productStore.indexByCategory(req.params.category);

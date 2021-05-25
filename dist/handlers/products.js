@@ -39,8 +39,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-var product_1 = require("../models/product");
 var verifyAuthToken_1 = __importDefault(require("../middleware/verifyAuthToken"));
+var product_1 = require("../models/product");
 var productStore = new product_1.ProductStore();
 var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var products, err_1;

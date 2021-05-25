@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -50,21 +39,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var verifyAuthToken_1 = __importDefault(require("../middleware/verifyAuthToken"));
-var user_1 = require("../models/user");
-var userStore = new user_1.UserStore();
+var order_1 = require("../models/order");
+var orderStore = new order_1.OrderStore();
 var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var users, err_1;
+    var orders, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, userStore.index()];
+                return [4 /*yield*/, orderStore.index()];
             case 1:
-                users = _a.sent();
+                orders = _a.sent();
                 res.status(200);
-                res.send(users);
+                res.send(orders);
                 return [3 /*break*/, 3];
             case 2:
                 err_1 = _a.sent();
@@ -76,24 +64,24 @@ var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, func
     });
 }); };
 var show = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, err_2;
+    var order, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 if (!req.params.id) {
                     res.status(400);
                     res.send({
-                        message: 'User\'s ID must be provided'
+                        message: 'Order\'s ID must be provided'
                     });
                 }
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, userStore.show(req.params.id)];
+                return [4 /*yield*/, orderStore.show(req.params.id)];
             case 2:
-                user = _a.sent();
+                order = _a.sent();
                 res.status(200);
-                res.send(user);
+                res.send(order);
                 return [3 /*break*/, 4];
             case 3:
                 err_2 = _a.sent();
@@ -105,30 +93,28 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
     });
 }); };
 var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var new_user, user, token, err_3;
+    var new_order, order, err_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                if (!req.body.first_name || !req.body.last_name || !req.body.password) {
+                if (!req.body.user_id || !req.body.status) {
                     res.status(400);
                     res.send({
-                        message: 'First, last and password must be provided'
+                        message: 'User_id and status (0 = active/1 = completed/2 = else) must be provided'
                     });
                 }
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                new_user = {
-                    first_name: req.body.first_name,
-                    last_name: req.body.last_name,
-                    password: req.body.password
+                new_order = {
+                    user_id: req.body.user_id,
+                    status: req.body.status
                 };
-                return [4 /*yield*/, userStore.create(new_user)];
+                return [4 /*yield*/, orderStore.create(new_order)];
             case 2:
-                user = _a.sent();
-                token = jsonwebtoken_1["default"].sign({ user: new_user }, process.env.TOKEN_SECRET, { expiresIn: '7d' });
+                order = _a.sent();
                 res.status(200);
-                res.send(__assign(__assign({}, user), { password: '*****', token: token }));
+                res.send(order);
                 return [3 /*break*/, 4];
             case 3:
                 err_3 = _a.sent();
@@ -139,9 +125,73 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
         }
     });
 }); };
-var userRoutes = function (app) {
-    app.get('/users', verifyAuthToken_1["default"], index);
-    app.get('/users/:id', verifyAuthToken_1["default"], show);
-    app.post('/users', create);
+var update = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var updated_order, order, err_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                if (!req.params.id || !req.body.user_id || !req.body.status) {
+                    res.status(400);
+                    res.send({
+                        message: 'Order\'s ID and updated order info must be provided'
+                    });
+                }
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                updated_order = {
+                    user_id: parseInt(req.body.user_id),
+                    status: parseInt(req.body.status)
+                };
+                return [4 /*yield*/, orderStore.update(req.params.id, updated_order)];
+            case 2:
+                order = _a.sent();
+                res.status(200);
+                res.send(order);
+                return [3 /*break*/, 4];
+            case 3:
+                err_4 = _a.sent();
+                res.status(400);
+                res.json(err_4.message);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+var destroy = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var order, err_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                if (!req.params.id) {
+                    res.status(400);
+                    res.send({
+                        message: 'Order\'s ID must be provided'
+                    });
+                }
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, orderStore["delete"](req.params.id)];
+            case 2:
+                order = _a.sent();
+                res.status(200);
+                res.send(order);
+                return [3 /*break*/, 4];
+            case 3:
+                err_5 = _a.sent();
+                res.status(400);
+                res.json(err_5.message);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+var orderRoutes = function (app) {
+    app.get('/orders', index);
+    app.get('/orders/:id', show);
+    app.post('/orders', verifyAuthToken_1["default"], create);
+    app.put('/orders/:id', verifyAuthToken_1["default"], update);
+    app["delete"]('/orders/:id', verifyAuthToken_1["default"], destroy);
 };
-exports["default"] = userRoutes;
+exports["default"] = orderRoutes;

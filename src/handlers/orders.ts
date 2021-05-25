@@ -21,6 +21,7 @@ const show = async(req: express.Request, res: express.Response) => {
         res.send({
             message: 'Order\'s ID must be provided'
         });
+        return;
     }
     try {
         const order = await orderStore.show(req.params.id);
@@ -36,13 +37,14 @@ const create = async(req: express.Request, res: express.Response) => {
     if (!req.body.user_id || !req.body.status) {
         res.status(400);
         res.send({
-            message: 'User_id and status (0 = active/1 = completed/2 = else) must be provided'
+            message: 'User_id and status (1 = active/2 = completed/3 = else) must be provided'
         });
+        return;
     }
     try {
         const new_order: OrderType = {
-            user_id: parseInt(req.body.user_id),
-            status: parseInt(req.body.status)
+            user_id: req.body.user_id,
+            status: req.body.status
         }
         const order = await orderStore.create(new_order);
         res.status(200);
@@ -59,6 +61,7 @@ const update = async(req: express.Request, res: express.Response) => {
         res.send({
             message: 'Order\'s ID and updated order info must be provided'
         });
+        return;
     }
     try {
         const updated_order: OrderType = {
@@ -80,6 +83,7 @@ const destroy = async(req: express.Request, res: express.Response) => {
         res.send({
             message: 'Order\'s ID must be provided'
         });
+        return;
     }
     try {
         const order = await orderStore.delete(req.params.id);
