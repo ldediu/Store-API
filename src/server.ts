@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import userRoutes from "./handlers/users";
 import productRoutes from "./handlers/products";
 import orderRoutes from "./handlers/orders";
+import orderDetailed from "./handlers/ordersDetailed"
 
 const app: express.Application = express();
 const address = "0.0.0.0:3000";
@@ -12,6 +13,7 @@ app.use(bodyParser.json());
 userRoutes(app);
 productRoutes(app);
 orderRoutes(app);
+orderDetailed(app);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
