@@ -1,9 +1,9 @@
 import DB from "../database";
 
 export type OrderType = {
-  id?: number;
-  user_id: number;
-  status: number;
+  id?: number,
+  user_id: number,
+  status: number
 };
 
 export class OrderStore {
@@ -40,7 +40,7 @@ export class OrderStore {
       const order = {
         id: result.rows[0].id,
         user_id: result.rows[0].user_id,
-        status: Number(result.rows[0].status),
+        status: Number(result.rows[0].status)
       };
       db_conn.release();
       return order;
@@ -69,7 +69,7 @@ export class OrderStore {
       db_conn.release();
       return result.rows[0];
     } catch (err) {
-      throw new Error(`Could not update order with id ${id}. Error: ${err}`);
+      throw new Error(`Could not delete order with id ${id}. Error: ${err}`);
     }
   }
 }

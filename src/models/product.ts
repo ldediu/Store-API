@@ -1,10 +1,10 @@
 import DB from "../database";
 
 export type ProductType = {
-  id?: number;
-  name: string;
-  price: number;
-  category: string;
+  id?: number,
+  name: string,
+  price: number,
+  category: string
 };
 
 export class ProductStore {
