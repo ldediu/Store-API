@@ -26,7 +26,7 @@ export class OrderDetStore {
     try {
       const db_conn = await DB.connect();
       const sql =
-        "INSERT INTO orders_detailed (order_id, product_id, status) VALUES($1, $2, $3) RETURNING *";
+        "INSERT INTO orders_detailed (order_id, product_id, quantity) VALUES($1, $2, $3) RETURNING *";
       const result = await db_conn.query(sql, [
         o_d.order_id,
         o_d.product_id,
@@ -53,8 +53,9 @@ export class OrderDetStore {
   ): Promise<OrderDetType> {
     try {
       const db_conn = await DB.connect();
-      const sql = `UPDATE orders_detailed SET product_id=$1, quantity=$2 WHERE order_id=${order_id} RETURNING *;`;
-      const result = await db_conn.query(sql, [o_d.product_id, o_d.quantity]);
+      const sql = `UPDATE orders_detailed SET order_id=$1, product_id=$2, quantity=$3 WHERE order_id=${order_id} RETURNING *;`;
+      const result = await db_conn.query(sql, [o_d.order_id, o_d.product_id, o_d.quantity]);
+      //await db_conn.query(`DELETE FROM orders_detailed WHERE id=${result.rows[0].id};`);
       db_conn.release();
       return result.rows[0];
     } catch (err) {

@@ -18,7 +18,6 @@ describe("Orders Handler Testing", () => {
     const response = await request.post('/users').send(new_user);
     token = response.body.token;
     us_id = response.body.id;
-    ord_id = response.body.id
   })
 
   it("index method should return a list of orders", async () => {
@@ -57,10 +56,8 @@ describe("Orders Handler Testing", () => {
   });
 
   it("destroy method should delete an order", async () => {
-    console.log('ord_id', ord_id)
     const response = await request.delete(`/orders/${ord_id}`).set("Authorization", `Bearer ${token}`);
     expect(response.status).toBe(200);
-    console.log(response.error)
   });
 
 });

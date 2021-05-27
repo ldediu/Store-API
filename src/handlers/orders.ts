@@ -1,5 +1,5 @@
 import express from 'express';
-import verifyAuthToken from '../middleware/verifyAuthToken'
+import verifyAuthToken from '../middleware/verifyAuthToken';
 import {OrderType, OrderStore} from '../models/order';
 
 const orderStore = new OrderStore();

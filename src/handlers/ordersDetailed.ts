@@ -1,7 +1,6 @@
 import express from 'express';
+import verifyAuthToken from '../middleware/verifyAuthToken'
 import {OrderDetType, OrderDetStore} from '../models/orderDetailed';
-
-//add awt
 
 const orderDetStore = new OrderDetStore();
 
@@ -47,7 +46,7 @@ const add_products_to_order = async(req: express.Request, res: express.Response)
 }
 
 const update_products_in_order = async(req: express.Request, res: express.Response) => {
-    if (!req.params.order_id || !req.body.product_id || !req.body.quantity) {
+    if (!req.params.id || !req.body.product_id || !req.body.quantity) {
         res.status(400);
         res.send({
             message: 'Order\'s ID and updated order info must be provided'
@@ -56,11 +55,11 @@ const update_products_in_order = async(req: express.Request, res: express.Respon
     }
     try {
         const updated_order: OrderDetType = {
-            order_id: parseInt(req.params.order_id),
+            order_id: parseInt(req.params.id),
             product_id: parseInt(req.body.product_id),
             quantity: parseInt(req.body.quantity)
         }
-        const result_order = await orderDetStore.update_products(req.params.order_id, updated_order);
+        const result_order = await orderDetStore.update_products(req.params.id, updated_order);
         res.status(200);
         res.send(result_order);
     } catch (err) {
@@ -70,7 +69,7 @@ const update_products_in_order = async(req: express.Request, res: express.Respon
 }
 
 const delete_all_products_from_order = async(req: express.Request, res: express.Response) => {
-    if (!req.params.order_id) {
+    if (!req.params.id) {
         res.status(400);
         res.send({
             message: 'Order\'s ID must be provided'
@@ -78,7 +77,7 @@ const delete_all_products_from_order = async(req: express.Request, res: express.
         return;
     }
     try {
-        const order = await orderDetStore.delete_products(req.params.order_id);
+        const order = await orderDetStore.delete_products(req.params.id);
         res.status(200);
         res.send(order);
     } catch (err) {
