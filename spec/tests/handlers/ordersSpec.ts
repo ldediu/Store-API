@@ -43,6 +43,11 @@ describe("Orders Handler Testing", () => {
     expect(response.status).toBe(200);
   });
 
+  it("show order by user method should return an order", async () => {
+    const response = await request.get("/orders/users/").send(us_id + '');
+    expect(response.body.length).toBeGreaterThan(0);
+  });
+
   it("update method should update an order", async () => {
     const new_order = {
       user_id: us_id,
@@ -53,6 +58,11 @@ describe("Orders Handler Testing", () => {
       .send(new_order)
       .set("Authorization", `Bearer ${token}`);
     expect(response.body.status).toBe(2);
+  });
+
+  it("destroy method should not work with a wrong token or without it", async () => {
+    const response = await request.delete(`/orders/${ord_id}`).set("Authorization", `Bearer missing_token`);
+    expect(response.status).toBe(401);
   });
 
   it("destroy method should delete an order", async () => {

@@ -1,10 +1,10 @@
 import DB from "../database";
 
 export type ProductType = {
-  id?: number,
-  name: string,
-  price: number,
-  category: string
+  id?: number;
+  name: string;
+  price: number;
+  category: string;
 };
 
 export class ProductStore {
@@ -42,8 +42,8 @@ export class ProductStore {
         id: result.rows[0].id,
         name: result.rows[0].name,
         price: Number(result.rows[0].price),
-        category: result.rows[0].category
-      }
+        category: result.rows[0].category,
+      };
       db_conn.release();
       return product;
     } catch (err) {
@@ -73,7 +73,9 @@ export class ProductStore {
       db_conn.release();
       return products;
     } catch (err) {
-      throw new Error(`Could not get products with category ${category}. Error: ${err}`);
+      throw new Error(
+        `Could not get products with category ${category}. Error: ${err}`
+      );
     }
   }
 }

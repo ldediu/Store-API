@@ -22,4 +22,8 @@ describe("Order Model Testing", () => {
     it('should have a delete method', () => {
         expect(store.delete).toBeDefined();
     });
+
+    it('should have a show current order by user method', () => {
+        expect(store.show_curr_by_user).toBeDefined();
+    });
 });

@@ -1,12 +1,11 @@
 import DB from "../database";
 import bcrypt from "bcrypt";
-import { parse } from "dotenv";
 
 export type UserType = {
-  id?: number,
-  first_name: string,
-  last_name: string,
-  password: string
+  id?: number;
+  first_name: string;
+  last_name: string;
+  password: string;
 };
 
 export class UserStore {

@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import userRoutes from "./handlers/users";
 import productRoutes from "./handlers/products";
 import orderRoutes from "./handlers/orders";
-import orderDetailed from "./handlers/ordersDetailed"
+import orderDetailed from "./handlers/ordersDetailed";
 
 const app: express.Application = express();
 const address = "0.0.0.0:3000";

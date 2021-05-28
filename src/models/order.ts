@@ -1,10 +1,12 @@
 import DB from "../database";
 
 export type OrderType = {
-  id?: number,
-  user_id: number,
-  status: number
+  id?: number;
+  user_id: number;
+  status: number;
 };
+
+// status: 1 = active / 2 = completed / 3 = else
 
 export class OrderStore {
   async index(): Promise<OrderType[]> {
@@ -40,7 +42,7 @@ export class OrderStore {
       const order = {
         id: result.rows[0].id,
         user_id: result.rows[0].user_id,
-        status: Number(result.rows[0].status)
+        status: Number(result.rows[0].status),
       };
       db_conn.release();
       return order;
@@ -70,6 +72,20 @@ export class OrderStore {
       return result.rows[0];
     } catch (err) {
       throw new Error(`Could not delete order with id ${id}. Error: ${err}`);
+    }
+  }
+
+  async show_curr_by_user(user_id: string): Promise<OrderType> {
+    try {
+      const db_conn = await DB.connect();
+      const sql = "SELECT * FROM orders WHERE user_id=($1) AND status=1";
+      const result = await db_conn.query(sql, [user_id]);
+      db_conn.release();
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(
+        `Could not find order with user's id ${user_id}. Error: ${err}`
+      );
     }
   }
 }

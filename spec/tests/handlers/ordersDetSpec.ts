@@ -70,6 +70,11 @@ describe("Orders_detailed Handler Testing", () => {
     expect(response.body.quantity).toEqual(5);
   });
 
+  it("methods should not work with a wrong token or without it", async () => {
+    const response = await request.delete(`/orders/${ord_id}/products`).set("Authorization", `Bearer missing_token`);
+    expect(response.status).toBe(401);
+  });
+
   it("delete_all_products_from_order method should delete all products in order", async () => {
     const response = await request.delete(`/orders/${ord_id}/products`).set("Authorization", `Bearer ${token}`);
     expect(response.status).toBe(200);

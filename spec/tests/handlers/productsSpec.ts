@@ -34,8 +34,19 @@ describe("Products Handler Testing", () => {
     expect(response.status).toBe(200);
   });
 
+  it("indexByCategory method should return a list of products of that category", async () => {
+    const response = await request.get("/products/category/Phones");
+    expect(response.body.length).toBeGreaterThan(0);
+  });
+
+  it("destroy method should not work with a wrong token or without it", async () => {
+    const response = await request.delete(`/products/${id}`).set("Authorization", `Bearer missing_token`);
+    expect(response.status).toBe(401);
+  });
+
   it("destroy method should delete a product", async () => {
     const response = await request.delete(`/products/${id}`).set("Authorization", `Bearer ${token}`);
     expect(response.status).toBe(200);
   });
+  
 });
