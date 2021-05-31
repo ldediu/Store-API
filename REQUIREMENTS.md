@@ -4,38 +4,93 @@ The company stakeholders want to create an online storefront to showcase their g
 These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application. 
 
 ## API Endpoints
-#### Products
-- Index 
-- Show
-- Create [token required]
-- [OPTIONAL] Products by category (args: product category)
+### Products
 
-#### Users
-- Index [token required]
-- Show [token required]
-- Create [token created]
+Show products
+- `[GET] "/products"`
 
-#### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+Show a product
+- `[GET] "/products/:id"`
+
+Create a product
+- `[POST] "/products"` - Token required
+
+Delete a product
+- `[DELETE] "/products/:id"` - Token required
+
+Show products by a category
+- `[GET] "/products/category/:category"` - Token required
+
+### Users
+
+Show users
+- `[GET] "/users"` - Token required
+
+Show a user
+- `[GET] "/users/:id"` - Token required
+
+Create a user 
+- `[POST] "/users"` - Token created
+
+### Orders
+
+Show orders
+- `[GET] "/orders"`
+
+Show an order
+- `[GET] "/orders/:id"`
+
+Create an order
+- `[POST] "/orders"` - Token required
+
+Update an order
+- `[PUT] "/orders/:id"` - Token required
+
+Delete an order
+- `[DELETE] "/orders/:id"` - Token required
+
+Show only current orders by user
+- `[GET] "/orders/users/:id"` - Token required
+
+### Orders Detailed
+
+Show all products in an order
+- `[GET] "/orders/:id/products"`
+
+Add products to an order
+- `[POST] "/orders/:id/products"` - Token required
+
+Edit products in an order
+- `[PUT] "/orders/:id/products"` - Token required
+
+Delete all produtct from an order
+- `[DELETE] "/orders/:id/products"` - Token required
 
 ## Data Shapes
-#### Product
--  id
-- name
-- price
-- [OPTIONAL] category
+#### Products
 
-#### User
-- id
-- firstName
-- lastName
-- password
+- id: serial
+- name: varchar
+- price: numeric
+- category: varchar
+
+#### Users
+
+- id: serial
+- first_name: varchar
+- last_name: varchar
+- password: varchar
 
 #### Orders
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
+
+- id: serial
+- user_id: integer [foreign key to users]
+- status: smallint
+
+#### Orders Detailed
+
+- id: serial
+- order_id: integer [foreign key to orders]
+- product_id: integer [foreign key to products]
+- quantity: smallint
 

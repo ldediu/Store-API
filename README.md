@@ -49,82 +49,93 @@ To run prettier:
 
 ## Database Schema
 
-### Products
+#### Products
 
-Table: `products (id:serial, name:varchar, price:numeric, category:varchar)`
+- id: serial
+- name: varchar
+- price: numeric
+- category: varchar
 
-### Users
+#### Users
 
-Table: `users (id:serial, first_name:varchar, last_name:varchar, password:varchar)`
+- id: serial
+- first_name: varchar
+- last_name: varchar
+- password: varchar
 
-### Orders
+#### Orders
 
-Table: `orders (id:serial, user_id:integer[foreign key to users], status:smallint)`
+- id: serial
+- user_id: integer [foreign key to users]
+- status: smallint
 
-### Orders Detailed
+#### Orders Detailed
 
-Table: `orders_detailed (id:serial, order_id:integer[foreign key to orders], product_id[foreign key to products], quantity:smallint)`
+- id: serial
+- order_id: integer [foreign key to orders]
+- product_id: integer [foreign key to products]
+- quantity: smallint
 
 ## Routes
 
 ### Products
 
 Show products
-- `get ("/products")`
+- `[GET] "/products"`
 
 Show a product
-- `get ("/products/:id")`
+- `[GET] "/products/:id"`
 
 Create a product
-- `post ("/products")` - Token required
+- `[POST] "/products"` - Token required
 
 Delete a product
-- `delete ("/products/:id")` - Token required
+- `[DELETE] "/products/:id"` - Token required
 
 Show products by a category
-- `get ("/products/category/:category")` - Token required
+- `[GET] "/products/category/:category"` - Token required
 
 ### Users
 
 Show users
-- `get ("/users")` - Token required
+- `[GET] "/users"` - Token required
 
 Show a user
-- `get ("/users/:id")` - Token required
+- `[GET] "/users/:id"` - Token required
 
 Create a user 
-- `post ("/users")` - Token created
+- `[POST] "/users"` - Token created
 
 ### Orders
 
 Show orders
-- `get ("/orders")`
+- `[GET] "/orders"`
 
 Show an order
-- `get ("/orders/:id")`
+- `[GET] "/orders/:id"`
 
 Create an order
-- `post ("/orders")` - Token required
+- `[POST] "/orders"` - Token required
 
 Update an order
-- `put ("/orders/:id")` - Token required
+- `[PUT] "/orders/:id"` - Token required
 
 Delete an order
-- `delete ("/orders/:id")` - Token required
+- `[DELETE] "/orders/:id"` - Token required
 
 Show only current orders by user
-- `get ("/orders/users/:id")` - Token required
+- `[GET] "/orders/users/:id"` - Token required
 
 ### Orders Detailed
 
 Show all products in an order
-- `get ("/orders/:id/products")`
+- `[GET] "/orders/:id/products"`
 
 Add products to an order
-- `post ("/orders/:id/products")` - Token required
+- `[POST] "/orders/:id/products"` - Token required
 
 Edit products in an order
-- `put ("/orders/:id/products")` - Token required
+- `[PUT] "/orders/:id/products"` - Token required
 
 Delete all produtct from an order
-- `delete ("/orders/:id/products")` - Token required
+- `[DELETE] "/orders/:id/products"` - Token required
