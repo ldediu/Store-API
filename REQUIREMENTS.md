@@ -1,9 +1,11 @@
 # API Requirements
+
 The company stakeholders want to create an online storefront to showcase their great product ideas. Users need to be able to browse an index of all products, see the specifics of a single product, and add products to an order that they can view in a cart page. You have been tasked with building the API that will support this application, and your coworker is building the frontend.
 
 These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application. 
 
 ## API Endpoints
+
 ### Products
 
 Show products
@@ -66,31 +68,42 @@ Edit products in an order
 Delete all produtct from an order
 - `[DELETE] "/orders/:id/products"` - Token required
 
-## Data Shapes
-#### Products
+## Data Shapes and Schema
 
-- id: serial
-- name: varchar
-- price: numeric
-- category: varchar
+### Products
 
-#### Users
+- id
+- name
+- price
+- category
 
-- id: serial
-- first_name: varchar
-- last_name: varchar
-- password: varchar
+`products (id: INTEGER PRIMARY KEY, name: VARCHAR, price: NUMERIC, category: VARCHAR)`
 
-#### Orders
+user_id: int [foreign key to users table], status: varchar[complete or active])`
 
-- id: serial
-- user_id: integer [foreign key to users]
-- status: smallint
+### Users
 
-#### Orders Detailed
+- id
+- first_name
+- last_name
+- password
 
-- id: serial
-- order_id: integer [foreign key to orders]
-- product_id: integer [foreign key to products]
-- quantity: smallint
+`users (id: INTEGER PRIMARY KEY, first_name: VARCHAR, last_name: VARCHAR, password: VARCHAR)`
+
+### Orders
+
+- id
+- user_id
+- status
+
+`orders (id: INTEGER PRIMARY KEY, user_id: INTEGER [foreign key to users], status: SMALLINT [1: active, 2: completed, 3: other])`
+
+### Orders Detailed
+
+- id
+- order_id
+- product_id
+- quantity
+
+`orders_detailed (id: INTEGER PRIMARY KEY, order_id: INTEGER [foreign key to orders], product_id: INTEGER [foreign key to products], quantity: SMALLINT)`
 
